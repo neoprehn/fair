@@ -124,8 +124,9 @@ class FairBetaPert(object):
         self._high  = high
         self._gamma = gamma
         self._range = high - low
-        # Run sanity check
+        # Run sanity checks
         self._run_range_check()
+        self._run_mode_check()
         # Run mean, alpha, and beta calcs in sequence.
         self._mean  = self._generate_mean()
         self._stdev = self._generate_stdev()
@@ -150,6 +151,18 @@ class FairBetaPert(object):
         """
         if self._range <= 0:
             raise FairException('"low" value must be less than "high" value.')
+
+    def _run_mode_check(self):
+        """Ensures that mode falls within [low, high]
+
+        Raises
+        ------
+        FairException
+            When mode is not between low and high (inclusive)
+
+        """
+        if not (self._low <= self._mode <= self._high):
+            raise FairException('"mode" value must be between "low" and "high".')
 
     def _generate_mean(self):
         """Generate mean for beta distribution"""
