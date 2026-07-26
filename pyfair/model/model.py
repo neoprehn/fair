@@ -414,7 +414,7 @@ class FairModel(object):
         # Standardize inputs to account for abbreviations
         target = self._standardize_target(target)
         # Check types
-        acceptable_types = [list, np.array, pd.Series]
+        acceptable_types = [list, np.ndarray, pd.Series]
         if type(array) not in acceptable_types:
             raise FairException('Inappropriate input type.')
         # Check length
